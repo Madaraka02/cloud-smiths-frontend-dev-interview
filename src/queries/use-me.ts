@@ -12,7 +12,6 @@ export const useLoggedInUserQuery = () => {
     queryFn: getLoggedInUser,
     retry: false,
     refetchOnWindowFocus: false,
-    refetchOnMount: true,
     refetchInterval: false,
     staleTime: 1000 * 60 * 60 * 24 * 30,
   });

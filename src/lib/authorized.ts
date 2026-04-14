@@ -63,3 +63,50 @@ export async function authorizedFetch<Req = unknown, Res = unknown>(
   }
   throw new Error("Response is not JSON");
 }
+
+
+
+// DOGS API FETCH
+export async function dogsFetch<Req = unknown, Res = unknown>(
+  endpoint: string,
+  options: {
+    method: string;
+    data?: Req;
+    headers?: HeadersInit;
+  }
+): Promise<Res> {
+  const BASE_API_URL = import.meta.env.VITE_DOGS_API_URL;
+  const url = `${BASE_API_URL}${endpoint}`;
+
+  let body: BodyInit | undefined = undefined;
+  let headers: HeadersInit = options?.headers || {};
+
+  if (options?.data) {
+    if (options.data instanceof FormData) {
+      body = options.data;
+    } else {
+      body = JSON.stringify(options.data);
+      headers = { ...headers, "Content-Type": "application/json" };
+    }
+  }
+
+  const res = await fetch(url, {
+    method: options?.method || "GET",
+    headers,
+    body,
+  });
+
+  if (!res.ok) {
+    console.log("Dogs API request failed", {
+      url,
+      status: res.status,
+    });
+    throw new Error((await res.text()) || "Request failed");
+  }
+
+  const contentType = res.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    return res.json();
+  }
+  throw new Error("Response is not JSON");
+}
