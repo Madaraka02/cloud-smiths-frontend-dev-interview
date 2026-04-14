@@ -32,7 +32,7 @@ const HomeScreen = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 w-full min-h-screen p-2">
       
-      <aside className="w-full lg:w-60 p-2 max-h-[40vh] lg:max-h-screen overflow-hidden">
+      <aside className="w-full lg:w-60 p-2 max-h-[30vh] lg:max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         
         {isLoading && (
           <div className="flex flex-col justify-center items-center mt-10 gap-2">
