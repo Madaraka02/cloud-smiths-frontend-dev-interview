@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDogBreedRandomImagesQuery, useDogBreedsQuery, useDogSubBreedRandomImagesQuery } from "@/queries/use-dog-breeds";
-import { ChevronRight, RefreshCcw, RotateCcw } from "lucide-react";
+import { ChevronRight, Dog, RefreshCcw, RotateCcw } from "lucide-react";
 import { useState } from "react";
 
 const HomeScreen = () => {
@@ -129,7 +129,10 @@ const HomeScreen = () => {
             <ErrorState message="Error loading images" refetch={refetchBreedImages} />
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mt-4">
+            {(!breedImages?.message || breedImages?.message.length === 0) && !isBreedImagesLoading && !isBreedImagesError && (
+                <EmptyState/>
+            )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">
             {breedImages?.message.map((image: string) => (
               <DogImage
                 key={image}
@@ -149,7 +152,7 @@ const HomeScreen = () => {
               breedImages={subBreedImages?.message.length ?? 0}
             />
 
-            {(isBreedImagesLoading || isSubBreedImagesLoading) && (
+            {isSubBreedImagesLoading && (
               <LoadingState />
             )}
 
@@ -157,7 +160,10 @@ const HomeScreen = () => {
               <ErrorState message="Couldn't load sub breeds" refetch={refetchSubBreedImages} />
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mt-4">
+            {(!subBreedImages?.message || subBreedImages?.message.length === 0) && !isSubBreedImagesLoading && !isSubBreedImagesError && (
+              <EmptyState/>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">
               {subBreedImages?.message.map((image: string) => (
                 <DogImage
                   key={image}
@@ -192,7 +198,7 @@ const ErrorState = ({message, refetch}:{message: string, refetch: () => void}) =
 
 const LoadingState = () => {
   return (
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 mt-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">
     {[...Array(3)].map((_, index) => (
     <div
     key={index}
@@ -215,7 +221,7 @@ const TitleContainer = ({ title, name, breedImages }: {title: string, name: stri
     {name}
     </h2>
     </div>
-    <span className="text-xs text-[#c4aa94] pb-1">
+    <span className="text-xs text-gray-400 pb-1">
     {breedImages
     ? `${breedImages} photos`
     : ""}
@@ -223,3 +229,18 @@ const TitleContainer = ({ title, name, breedImages }: {title: string, name: stri
     </div>
     )
 }
+
+
+const EmptyState = () => (
+  <div className="flex flex-col items-center justify-center py-24 gap-4 text-gray-400">
+    <Dog size={56} strokeWidth={1.2} />
+    <p
+      className="text-lg tracking-wide"
+    >
+      Pick a breed to begin
+    </p>
+    <p className="text-sm text-gray-400">
+      Browse  breeds from the sidebar
+    </p>
+  </div>
+);
