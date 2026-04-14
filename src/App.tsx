@@ -3,6 +3,7 @@ import LoginPage from "./screens/login"
 import HomeScreen from "./screens/home"
 import { ProtectedRoute } from "./components/protected-route";
 import MainLayout from "./components/layout";
+import FavsScreen from "./screens/favs";
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
         }
       >
         <Route path="/home" element={<HomeScreen />} />
+        <Route path="/favourites" element={<FavsScreen />} />
+
       </Route>
     </Routes>
     </>

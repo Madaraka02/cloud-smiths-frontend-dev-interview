@@ -25,7 +25,7 @@ const Header = () => {
         <div className={`container flex  w-full ${isMobile ? "flex-col gap-4":"flex-row items-center justify-between mx-auto h-6"} ${navOpen && isMobile && "h-screen"}`}>
           <div className="flex flex-row justify-between gap-4">
             <div>
-              <a href={'/#home'} className="font-bold leading-loose tracking-wide text-xl">Dog Breeds.</a>
+              <a href={'/#home'} className="font-bold leading-loose tracking-wide text-xl">Dog Breed Viewer.</a>
             </div>
             {isMobile &&
             <Button
@@ -36,7 +36,10 @@ const Header = () => {
               <TextAlignEnd/>
             </Button>}
           </div>
-
+          <div className={`${navOpen && isMobile && "flex"} ${!navOpen && isMobile && "hidden"} gap-6  ${isMobile ? "flex flex-col items-start":"flex flex-row items-center" }`}>
+                <a href={'/home'} className='text-gray-600 hover:text-purple-500 font-light text-sm'>Home</a>
+                <a href={'/favourites'} className='text-gray-600 hover:text-purple-500 font-light text-sm'>Favourites</a>
+          </div>
           <div className={`${navOpen && isMobile && "flex"} ${!navOpen && isMobile && "hidden"} flex flex-row gap-4 items-center`}>
 
 
