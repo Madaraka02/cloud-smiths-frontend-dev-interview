@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router"
 import LoginPage from "./screens/login"
 import HomeScreen from "./screens/home"
 import { ProtectedRoute } from "./components/protected-route";
+import MainLayout from "./components/layout";
 
 
 function App() {
@@ -10,7 +11,16 @@ function App() {
     <>
     <Routes>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/home" element={<ProtectedRoute><HomeScreen /></ProtectedRoute>} />
+      
+      <Route
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/home" element={<HomeScreen />} />
+      </Route>
     </Routes>
     </>
   )
